@@ -1,1 +1,1 @@
-This code waits for a message on RabbitMQ, reads it, checksmysql for user and pass, and sends back a response
+This code takes a username and password, sends it to RabbitMQ, read by another code, reads the response, and logs the user in or not.
