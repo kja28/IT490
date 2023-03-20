@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Community Discussion Posts</title>
+    <style>
+        body {
+            background-color: #333;
+            color: #fff;
+        }
+
+        h1, h2, p, label {
+            margin: 0;
+        }
+
+        form {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"], textarea {
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            padding: 10px;
+            margin-bottom: 10px;
+            width: 100%;
+        }
+
+        input[type="submit"] {
+            background-color: #f44336;
+            border: none;
+            border-radius: 5px;
+            color: #fff;
+            cursor: pointer;
+            font-size: 16px;
+            padding: 10px 20px;
+        }
+
+        input[type="submit"]:hover {
+            background-color: #ff6659;
+        }
+
+        hr {
+            border: none;
+            border-top: 1px solid #fff;
+            margin: 20px 0;
+        }
+        button {
+  background-color: #4CAF50;
+  border: none;
+  border-radius: 5px;
+  color: #fff;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px 20px;
+  margin-top: 20px;
+  display: block;
+margin: 0 auto;
+}
+
+button:hover {
+  background-color: #ff6659;
+}
+    </style>
+</head>
+<body>
+    
+
+    <h1>Community Discussion Posts</h1>
+
+    <!-- HTML form to submit new posts -->
+    <form action="add_post.php" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title">
+        
+        <label for="content">Content:</label>
+        <textarea id="content" name="content"></textarea>
+        
+        <label for="author">Author:</label>
+        <input type="text" id="author" name="author">
+        
+        <input type="submit" value="Submit">
+    </form>
+
+    <hr>
+
+    <?php
+    // Connect to MySQL database
+    $conn = mysqli_connect("localhost", "username", "password", "database_name");
+
+    // Check if the connection was successful
+    if (!$conn) {
+        die("Connection failed: " . mysqli_connect_error());
+    }
+
+    // Retrieve the discussion posts from the MySQL database
+    $sql = "SELECT * FROM posts ORDER BY post_id DESC";
+    $result = mysqli_query($conn, $sql);
+
+    // Display the discussion posts on the page
+    while ($row = mysqli_fetch_assoc($result)) {
+        echo "<h2>" . $row["title"] . "</h2>";
+        echo "<p>" . $row["content"] . "</p>";
+        echo "<p>Posted by " . $row["author"] . " on " . $row["post_date"] . "</p>";
+        echo "<hr>";
+    }
+
+    // Close the MySQL connection
+    mysqli_close($conn);
+    ?>
+    <br>
+    <br>
+    <button onclick="location.href='cookingpage.html'">Go back to cooking page</button>
+</body>
+</html>
