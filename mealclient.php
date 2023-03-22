@@ -40,7 +40,7 @@ $request = "hi";
 
 $meal_request = array(
 
-  'request' = $request
+  'request' => $request
 
 );
 
