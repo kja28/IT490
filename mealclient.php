@@ -118,4 +118,19 @@ $channel2->close();
 
 $connection->close();
 
+
 ?>
+
+
+//The html code
+
+<!DOCTYPE html>
+<html>
+	<body>
+		<form method = "POST"
+		      <input type ="submit" value = "Submit">
+		      </form>
+		
+
+	</body>
+</html>
