@@ -60,7 +60,7 @@ $callback = function ($msg) use (&$response)
 
 {
 
-  $data = json_decode[$msg->body, true];
+  $data = json_decode($msg->body, true);
 
   $id = $data['id'];
 
@@ -127,7 +127,7 @@ $connection->close();
 <!DOCTYPE html>
 <html>
 	<body>
-		<form method = "POST"
+		<form method = "POST">
 		      <input type ="submit" value = "Submit">
 		      </form>
 		
