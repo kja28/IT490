@@ -52,11 +52,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   // check response message
   if ($response == 'success') {
-    echo "Profile successfully created"; 
+    session_start();
+    $_SESSION['username'] = $username;
+    header('Location: loginpage.html');
+    exit();
   } else {
     // user is invalid, display error message
-   echo "Error creating profile";
+    header('Location: registerPage.html');
   }
+  
 }
 
 // close the RabbitMQ connection
