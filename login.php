@@ -46,14 +46,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   }
 
   // check response message
-  if ($response == 'success') {
-    $error = "You logged in";
+  if ($response == 'success') 
+  {
     // user is valid, start a session and redirect to home page
-    // session_start();
-    // $_SESSION['username'] = $username;
-    // header("Location: home.php");
-    // exit();
-  } else {
+    session_start();
+    $_SESSION['username'] = $username;
+    header("Location: cookingpage.html");
+    exit();
+  } 
+  else 
+  {
     // user is invalid, display error message
     $error = "Invalid username or password.";
   }
