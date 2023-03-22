@@ -23,5 +23,5 @@ curl_close($curl);
 
 return $response['value'];
 
-
+echo $response;
 }
