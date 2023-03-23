@@ -23,7 +23,8 @@ curl_close($curl);
 
 echo $response;
 
-return $response['value'];
+$response_object = json_decode($response);
+return $response_object->value;
 
 
 }
