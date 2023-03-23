@@ -26,11 +26,11 @@ if ($err){
 }
 	else{
 		echo $response;
-	}
 
 
 $response_object = json_decode($response);
 return $response_object->value;
 
 
+}
 }
