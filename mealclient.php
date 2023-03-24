@@ -62,31 +62,47 @@ $callback = function ($msg) use (&$response)
 
   $data = json_decode($msg->body, true);
 
-  $id = $data['id'];
+  $id = $data[0]['id'];
 
-  $title = $data['title'];
+  $title = $data[0]['title'];
 
-  $ing = $data['ingrediants'];
+  $ing = $data[0]['ingrediants'];
 
-  $ins = $data['instructions'];
+  $ins = $data[0]['instructions'];
 
-  $time = $data['times'];
+  $time = $data[0]['times'];
 
-  $image = $data['image'];
+  $image = $data[0]['image'];
+	
+  $response = true;
 
-  
+// Display the message on the webpage
 
-  echo $id;
+    echo "<h1>$title</h1>";
 
-  echo $title;
+    echo "<h2>Ingredients:</h2>";
 
-  echo $ing;
+    echo "<ul>";
 
-  echo $ins;
+    foreach ($ing as $x) {
 
-  echo $time;
+        echo "<li> $x </li>";
 
-  echo $image;
+    }
+
+    echo "</ul>";
+
+    echo "<h2>Instructions:</h2>";
+
+    echo "<ol>";
+
+    foreach ($ins as $y) {
+
+        echo "<li> $y[text] </li>";
+
+    }
+
+    echo "</ol>";
 
 };
 
@@ -120,17 +136,3 @@ $connection->close();
 
 
 ?>
-
-
-//The html code
-
-<!DOCTYPE html>
-<html>
-	<body>
-		<form method = "POST">
-		      <input type ="submit" value = "Submit">
-		      </form>
-		
-
-	</body>
-</html>
