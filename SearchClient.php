@@ -35,7 +35,7 @@ $channel->queue_declare('search', false, true, false, false);
 $channel2 = $connection->channel();
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
 $channel2->queue_declare('search', false, true, false, false);
-if ($_SERVER['REQUEST METHOD']==='POST'){
+if ($_SERVER['REQUEST_METHOD']==='POST'){
     
 
 // Callback function waits for a message from RabbitMQ and then decodes the message, checks mysql, and sends a message back
