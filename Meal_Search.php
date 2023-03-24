@@ -35,6 +35,23 @@ function search($queryx){
     }
 }
 
+//The search form
+
+if(isset($_GET['search'])){
+    $query = $_GET['search'];
+    
+    $response = search($query);
+    echo $response;
+} else{
+    echo '<form method= "GET">';
+    echo '<label for="search"> Search Here:</label>';
+    echo '<input type="text" name="search" id="search">';
+    echo '<input type ="submit" value="Search">';
+    echo '</form>';
+}
+
+        
+
 // Connect to RabbitMQ
 $connection = new AMQPStreamConnection('172.28.118.6', 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
