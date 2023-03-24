@@ -56,6 +56,8 @@ function submitRating(rating)
 
 {
 
+  console.log('Sending AJAX request...');
+
   $.ajax(
 
   {
@@ -70,10 +72,28 @@ function submitRating(rating)
 
     {
 
+      console.log(data);
+
+      console.log('recieving AJAX response...');
+
       $('#avgRating').html(data);
 
+    },
+
+    error: function(browser, status, error) 
+
+    {
+
+    console.log("AJAX request failed: " + status + " - " + error);
+
     }
+
+
 
   });
 
 }
+
+
+
+var browser = request();
