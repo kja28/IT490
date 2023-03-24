@@ -88,7 +88,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   {
 
-   $sqlinsert = "INSERT INTO Users (username, password, firstname, lastname, diet) VALUES ($username, $password, $firstname, $lastname, $diet);"
+   $sqlinsert = "INSERT INTO Users (username, password, firstname, lastname, diet) VALUES ('$username', '$password', '$firstname', '$lastname', '$diet')";
 
    $result = $mysqli->query($sqlinsert);
 
@@ -112,15 +112,15 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   // Send a response back to RabbitMQ 
 
-  $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'login_response', true);
-
+  $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'profile_response', true);
+  }
 };
 
 
 
 // Consume the message so it doesn're read it
 
-$channel->basic_consume('login_requests', '', false, true, false, false, $callback);
+$channel->basic_consume('profile_requests', '', false, true, false, false, $callback);
 
 
 
