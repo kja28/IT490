@@ -24,13 +24,13 @@ $channel = $connection->channel();
 
 $channel->exchange_declare('testExchange', 'topic', false, true, false);
 
-$channel->queue_declare('meal_requests', false, true, false, false);
+$channel->queue_declare('search_requests', false, true, false, false);
 
 $channel2 = $connection->channel();
 
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
 
-$channel2->queue_declare('meal_response', false, true, false, false);
+$channel2->queue_declare('search_response', false, true, false, false);
 
 
 
