@@ -16,9 +16,12 @@ $channel->queue_declare('profile_requests', false, true, false, false);
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
 $channel2->queue_declare('profile_response', false, true, false, false);
 
+// start the session
+session_start();
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // gets the username and password from what the user types in and encodes it as a json
-  // For security purposes the password should be hashed first and store only hashed passwords in mysql	
+  // For security purposes the password should be hashed first and store only hashed passwords in mysql  
   $username = $_POST["username"];
   $firstname = $_POST["firstname"];
   $lastname = $_POST["lastname"];
@@ -45,14 +48,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   while ($response === null) {
     $channel2->wait();
     if ($response !==null) {
-    break;
+      break;
     }
-
   }
 
   // check response message
   if ($response == 'success') {
-    session_start();
+    // set the session variable
     $_SESSION['username'] = $username;
     header('Location: loginpage.html');
     exit();
@@ -60,7 +62,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // user is invalid, display error message
     header('Location: registerPage.html');
   }
-  
 }
 
 // close the RabbitMQ connection
