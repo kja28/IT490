@@ -1,3 +1,5 @@
+
+
 <?php
 
 //want to later put the CSS code and PHP code into seperate files, to make everything neater
@@ -40,11 +42,23 @@ $channel2->queue_declare('5star_response', false, true, false, false);
 
 
 
-$callback = function ($msg) use ($connection) {
+$channel->basic_publish(new AMQPMessage($rating), 'testExchange', '5star_request', true);
 
-  $response = json_decode($msg->body);
 
-  $data = $response->average_rating;
+
+$avgRating = null;
+
+$done = false;
+
+$callback = function ($msg) use ($connection, &$avgRating, &$done)
+
+{
+
+  $avgRating = $msg->body;
+
+  $done = true;
+
+  echo $avgRating;
 
 };
 
@@ -54,17 +68,55 @@ $callback = function ($msg) use ($connection) {
 
 
 
-$channel->basic_publish(new AMQPMessage($rating), 'testExchange', '5star_request', true);
-
-$channel2->basic_consume($queue, '', false, true, false, false, $callback);
 
 
+$channel2->basic_consume('5star_response', '', false, true, false, false, $callback);
 
-while (count($channel2->callbacks)) {
 
-  $channel2->wait();
+
+$timeout = 10; 
+
+$start_time = time();
+
+
+
+while (true) 
+
+{
+
+    $channel2->wait(null, false, $timeout);
+
+    if($done)
+
+    {
+
+      break;
+
+    }
+
+    if ($avgRating !==null) 
+
+    {
+
+
+
+      break;
+
+
+
+    }
+
+    if (time() - $start_time > $timeout) 
+
+    {
+
+        break;
+
+    }
 
 }
+
+
 
 
 
@@ -77,7 +129,5 @@ $channel2->close();
 $connection->close();
 
 
-
-// display login form
 
 ?>
