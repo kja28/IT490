@@ -1,7 +1,7 @@
 <?php function search($queryx){
 
 
-$query = urlcode($queryx);
+$query = urlencode($queryx);
 
 $curl = curl_init();
 	
