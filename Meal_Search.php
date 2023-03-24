@@ -1,8 +1,6 @@
 <?php function search($queryx){
 
 
-<?php
-
 $query = urlcode($queryx);
 
 $curl = curl_init();
