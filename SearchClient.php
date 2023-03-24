@@ -31,10 +31,10 @@ $channel = $connection->channel();
 
         //if server request method }before closing the channels
 $channel->exchange_declare('testExchange', 'topic', false, true, false);
-$channel->queue_declare('search', false, true, false, false);
+$channel->queue_declare('search_requests', false, true, false, false);
 $channel2 = $connection->channel();
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
-$channel2->queue_declare('search', false, true, false, false);
+$channel2->queue_declare('search_response', false, true, false, false);
 if ($_SERVER['REQUEST_METHOD']==='POST'){
     
 
@@ -47,11 +47,11 @@ $callback = function($msg) use ($mysqli, $channel2) {
     $response = search($request);
 
     // Send a response back to RabbitMQ 
-    $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'meal_response', true);
+    $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'search_response', true);
 };
 
 // Consume the message so it doesn're read it
-$channel->basic_consume('search', '', false, true, false, false, $callback);
+$channel->basic_consume('search_response', '', false, true, false, false, $callback);
 
 // Wait for messages
 while(true) {
