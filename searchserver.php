@@ -45,87 +45,46 @@ $mysqli = new mysqli('localhost', 'admin', 'Sc2aD3.456', 'Project');
 $callback = function($msg) use ($mysqli, $channel2) 
 
 {
-
   // Extract the username and password from the message
-
   $data = json_decode($msg->body, true);
-
-  $request = $data['request'];
-
-  $query = "peppers";
-
-  
-
-
-
+  $search = $data['search'];
+  $query = $search;
 	$curl = curl_init();
-
-
-
-         curl_setopt_array($curl, [
-        CURLOPT_URL =>  "https://yummly2.p.rapidapi.com/feeds/search?&q=%7B$query%7D&maxResult=10&start=0",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 1,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => [
-            "X-RapidAPI-Host: yummly2.p.rapidapi.com",
-            "X-RapidAPI-Key: f3e58460f7msh59bd4ab7d8245aap10982bjsn0b20d69d0da7"
-        ],
-    ]);
+curl_setopt_array($curl, [
+	CURLOPT_URL => "https://edamam-recipe-search.p.rapidapi.com/search?q=$query",
+	CURLOPT_RETURNTRANSFER => true,
+	CURLOPT_FOLLOWLOCATION => true,
+	CURLOPT_ENCODING => "",
+	CURLOPT_MAXREDIRS => 10,
+	CURLOPT_TIMEOUT => 30,
+	CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
+	CURLOPT_CUSTOMREQUEST => "GET",
+	CURLOPT_HTTPHEADER => [
+		"X-RapidAPI-Host: edamam-recipe-search.p.rapidapi.com",
+		"X-RapidAPI-Key: f3e58460f7msh59bd4ab7d8245aap10982bjsn0b20d69d0da7"
+		]
+		]);
   $response = curl_exec($curl);
-
   // $err = curl_error($curl);
-
-
-
   curl_close($curl);
-
-
-
-  // echo $response;
-
-  
-
-  
-
+  // echo $response; 
   // Send a response back to RabbitMQ 
-
   $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'search_response', true);
-
 };
-
-
-
 // Consume the message so it doesn're read it
-
 $channel->basic_consume('search_requests', '', false, true, false, false, $callback);
-
-
-
 // Wait for messages
 
 while(true) 
-
 {
-
 	$channel->wait();
-
 }
 
 
 
 // Close connections when done
-
 $channel->close();
-
 $channel2->close();
-
 $connection->close();
-
 $mysqli->close();
-
 ?>
