@@ -56,6 +56,10 @@ $channel->basic_consume('search', '', false, true, false, false, $callback);
 // Wait for messages
 while(true) {
     $channel->wait();
+    if ($response !== null)
+    {
+        break;
+    }
 }
 }
 // Close connections when done
