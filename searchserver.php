@@ -63,11 +63,11 @@ $callback = function($msg) use ($mysqli, $channel2)
 
 
          curl_setopt_array($curl, [
-        CURLOPT_URL =>  "https://yummly2.p.rapidapi.com/feeds/auto-complete?q={$query}",
+        CURLOPT_URL =>  "https://yummly2.p.rapidapi.com/feeds/search?&q=%7B$query%7D&maxResult=10&start=0",
         CURLOPT_RETURNTRANSFER => true,
         CURLOPT_FOLLOWLOCATION => true,
         CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
+        CURLOPT_MAXREDIRS => 1,
         CURLOPT_TIMEOUT => 30,
         CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
         CURLOPT_CUSTOMREQUEST => "GET",
