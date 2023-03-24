@@ -14,13 +14,7 @@
 </html>
         
 <?php
-
-if ($_SERVER['REQUEST METHOD']==='POST'){
-}
-else {
-
-}
-    
+   
 require_once __DIR__ . '/vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -41,6 +35,8 @@ $channel->queue_declare('search', false, true, false, false);
 $channel2 = $connection->channel();
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
 $channel2->queue_declare('search', false, true, false, false);
+if ($_SERVER['REQUEST METHOD']==='POST'){
+    
 
 // Callback function waits for a message from RabbitMQ and then decodes the message, checks mysql, and sends a message back
 $callback = function($msg) use ($mysqli, $channel2) {
@@ -61,7 +57,7 @@ $channel->basic_consume('search', '', false, true, false, false, $callback);
 while(true) {
     $channel->wait();
 }
-
+}
 // Close connections when done
 $channel->close();
 $channel2->close();
