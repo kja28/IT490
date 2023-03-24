@@ -94,7 +94,7 @@ $callback = function($msg) use ($mysqli, $channel2)
 
   // Send a response back to RabbitMQ 
 
-  $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'meal_response', true);
+  $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'search_response', true);
 
 };
 
@@ -102,7 +102,7 @@ $callback = function($msg) use ($mysqli, $channel2)
 
 // Consume the message so it doesn're read it
 
-$channel->basic_consume('meal_requests', '', false, true, false, false, $callback);
+$channel->basic_consume('search_requests', '', false, true, false, false, $callback);
 
 
 
