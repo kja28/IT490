@@ -84,6 +84,8 @@ form input[type="radio"]:checked ~ label {
 
   <label for="star5">&#9733;</label>
 
+  <input type="submit" value="Submit">
+
 </form>
 
 <p id="avgRating">Average rating: </p>
