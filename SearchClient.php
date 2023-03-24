@@ -5,7 +5,7 @@
     </head>
     <body>
      
-<form method="GET" action= "search">
+<form method="POST" action= "search">
     <label for="search">search:</label>
     <input type="text" id="search" name="qury">
     <input type="submit" value="submit">
