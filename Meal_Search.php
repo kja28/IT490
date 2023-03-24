@@ -3,10 +3,13 @@
 
 <?php
 
+$query = urlcode($queryx);
+
 $curl = curl_init();
+	
 
 curl_setopt_array($curl, [
-	CURLOPT_URL => "https://yummly2.p.rapidapi.com/feeds/auto-complete?q=chicken%20soup",
+	CURLOPT_URL =>  "https://yummly2.p.rapidapi.com/feeds/auto-complete?q={$query}",
 	CURLOPT_RETURNTRANSFER => true,
 	CURLOPT_FOLLOWLOCATION => true,
 	CURLOPT_ENCODING => "",
@@ -25,15 +28,15 @@ $err = curl_error($curl);
 
 curl_close($curl);
 
-if ($err) {
-	echo "cURL Error #:" . $err;
-} else {
-	echo $response;
-}
-$response = curl_exec($curl);
-//$err = curl_error($curl);
+ if ($err) {
+        echo "cURL Error #:" . $err;
+    } else {
+        echo $response;
+    }
+    
+    
+    $response_data = json_decode($response, true);
 
-curl_close($curl);
-
-return $response['value'];
+    
+    return $response_data['value'];
 }
