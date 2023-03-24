@@ -183,60 +183,49 @@ $channel2 = $connection->channel();
 
 //Created 2 channels and specified the exchange and queues for them to send and recieve messages
 $channel->exchange_declare('testExchange', 'topic', false, true, false);
-$channel->queue_declare('profile_requests', false, true, false, false);
+$channel->queue_declare('page_requests', false, true, false, false);
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
-$channel2->queue_declare('profile_response', false, true, false, false);
+$channel2->queue_declare('page_response', false, true, false, false);
 
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-  // gets the username and password from what the user types in and encodes it as a json
-  // For security purposes the password should be hashed first and store only hashed passwords in mysql	
-  $username = $_POST["username"];
-  $firstname = $_POST["firstname"];
-  $lastname = $_POST["lastname"];
-  $password = $_POST["password"];
-  $diet = $_POST["dietary"];
 
   $profile_request = array(
-    'username' => $username,
-    'firstname' => $firstname,
-    'lastname' => $lastname,
-    'password' => $password,
-    'diet' => $diet 
+    'request' => "hi",
   );
+
   $msg = new AMQPMessage(json_encode($profile_request));
 
   // sends the message out to rabbitmq from channel and waits for a response on channel2
-  $channel->basic_publish($msg, 'testExchange', 'profile_requests', true);
+  $channel->basic_publish($msg, 'testExchange', 'page_requests', true);
 
   $response = null;
-  $callback = function ($msg) use (&$response) {
-    $response = $msg->body;
+  $callback = function ($msg) use ($connection, &$response) 
+  {
+    $data = json_decode($msg->body, true);
+    $user = $data['username'];
+    $first = $data['firstname'];
+    $last = $data['lastname'];
+    $pass = $data['password'];
+    $diet = $data['diet'];
+
+ // Display the message on the webpage
+
+    echo "<p>Username: " . $user . "</p>";
+    echo "<p>First Name: " . $first . "</p>";
+    echo "<p>Last Name: " . $last . "</p>";
+    echo "<p>Dietary Restrictions: " . $diet . "</p>";
+
+    $response = "done";
   };
-  $channel2->basic_consume('profile_response', '', false, true, false, false, $callback);
-  while ($response === null) {
+
+  $channel2->basic_consume('page_response', '', false, true, false, false, $callback);
+  while ($response === null) 
+  {
     $channel2->wait();
-    if ($response !==null) {
+    if ($response !==null) 
+    {
     break;
     }
-
   }
-
-  // check response message
-  if ($response == 'success') {
-    session_start();
-    $_SESSION['username'] = $username;
-    echo "<p>Username: " . $row['username'] . "</p>";
-		echo "<p>First Name: " . $row['firstname'] . "</p>";
-		echo "<p>Last Name: " . $row['lastname'] . "</p>";
-		echo "<p>Dietary Restrictions: " . $row['dietary'] . "</p>";
-
-    exit();
-  } else {
-    // user is invalid, display error message
-    header('Location: registerPage.html');
-  }
-  
-}
 
 // close the RabbitMQ connection
 $channel->close();
