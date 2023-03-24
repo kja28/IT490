@@ -40,14 +40,33 @@ if ($_SERVER['REQUEST_METHOD']==='POST'){
 
 // Callback function waits for a message from RabbitMQ and then decodes the message, checks mysql, and sends a message back
 $callback = function($msg) use ($mysqli, $channel2) {
+
     $data = json_decode($msg->body, true);
-    $request = $data['request'];
+    $data = json_decode($msg->body, true);
+    $id = $data[0]['id'];
+    $title = $data[0]['title'];
+    $ing = $data[0]['ingredients'];
+    $ins = $data[0]['instructions'];
+    $time = $data[0]['times'];
+    $image = $data[0]['image'];
 
-    // Call the search function to make API call using cURL
-    $response = search($request);
+    // Display the message on the webpage
+    echo "<h1>$title</h1>";
+    echo "<h2>Ingredients:</h2>";
+    echo "<ul>";
+    foreach ($ing as $x) {
 
-    // Send a response back to RabbitMQ 
-    $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'search_response', true);
+        echo "<li> $x </li>";
+
+    }
+
+    echo "</ul>";
+    echo "<h2>Instructions:</h2>";
+    echo "<ol>";
+    foreach ($ins as $y) {
+        echo "<li> $y[text] </li>";
+    }
+    echo "</ol>";
 };
 
 // Consume the message so it doesn're read it
