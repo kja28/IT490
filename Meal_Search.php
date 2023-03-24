@@ -36,6 +36,8 @@ function search($queryx){
 }
 
 //The search form
+//Resource: https://www.w3schools.com/html/html_forms.asp
+//https://www.w3schools.com/php/php_forms.asp
 
 if(isset($_GET['search'])){
     $query = $_GET['search'];
