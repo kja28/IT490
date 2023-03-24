@@ -1,42 +1,12 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Search</title>
+    </head>
+    <body>
+     
 <?php
-
-require_once __DIR__ . '/vendor/autoload.php';
-
-use PhpAmqpLib\Connection\AMQPStreamConnection;
-use PhpAmqpLib\Message\AMQPMessage;
-
-// The api search 
-function search($queryx){
-    $query = urlencode($queryx);
-    $curl = curl_init();
-    curl_setopt_array($curl, [
-        CURLOPT_URL =>  "https://yummly2.p.rapidapi.com/feeds/auto-complete?q={$query}",
-        CURLOPT_RETURNTRANSFER => true,
-        CURLOPT_FOLLOWLOCATION => true,
-        CURLOPT_ENCODING => "",
-        CURLOPT_MAXREDIRS => 10,
-        CURLOPT_TIMEOUT => 30,
-        CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,
-        CURLOPT_CUSTOMREQUEST => "GET",
-        CURLOPT_HTTPHEADER => [
-            "X-RapidAPI-Host: yummly2.p.rapidapi.com",
-            "X-RapidAPI-Key: f3e58460f7msh59bd4ab7d8245aap10982bjsn0b20d69d0da7"
-        ],
-    ]);
-    $response = curl_exec($curl);
-    $err = curl_error($curl);
-    curl_close($curl);
-    if ($err) {
-        echo "cURL Error #:" . $err;
-    } else {
-        return $response;
-    }
-}
-
-//The search form
-//Resource: https://www.w3schools.com/html/html_forms.asp
-//https://www.w3schools.com/php/php_forms.asp
-
+        
 if(isset($_GET['search'])){
     $query = $_GET['search'];
     
@@ -49,9 +19,22 @@ if(isset($_GET['search'])){
     echo '<input type ="submit" value="Search">';
     echo '</form>';
 }
-
+?>
+    </body>
+</html>
         
+<?php
 
+require_once __DIR__ . '/vendor/autoload.php';
+
+use PhpAmqpLib\Connection\AMQPStreamConnection;
+use PhpAmqpLib\Message\AMQPMessage;       
+
+
+//The search form
+//Resource: https://www.w3schools.com/html/html_forms.asp
+//https://www.w3schools.com/php/php_forms.asp
+        
 // Connect to RabbitMQ
 $connection = new AMQPStreamConnection('172.28.118.6', 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
