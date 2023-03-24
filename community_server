@@ -20,32 +20,51 @@ $channel2->queue_declare('com_response', false, true, false, false);
 $mysqli = new mysqli('localhost', 'admin', 'Sc2aD3.456', 'Project');
 
 // Callback function waits for a message from RabbitMQ and then decodes the message, checks mysql, and sends a message back
-$callback = function($msg) use ($mysqli, $channel2) {
+$post = null;
+$callback = function($msg) use ($mysqli, $channel2) 
+{
   // Extract the username and password from the message
   $data = json_decode($msg->body, true);
-  $username = $mysqli->real_escape_string($data['username']);
-  $password = $mysqli->real_escape_string($data['password']);
+  $username = "first";
 
+  if (isset($data['post']))
+  {
+    $username = $mysqli->real_escape_string($data['author']);
+    $post = $mysqli->real_escape_string($data['post']);
+    $time = $mysqli->real_escape_string($data['time']);
+    $title = $mysqli->real_escape_string($data['title']);  
+  }
+	
   // Search for the user in the MySQL database
-  $sql = "SELECT * FROM Users WHERE username = '$username' AND password = '$password'";
+  $sql = 'SELECT * FROM Messages ORDER BY timestamp DESC LIMIT 1';
   $result = $mysqli->query($sql);
 
   // Check if the user exists
   if ($result->num_rows == 1) {
-    $response = "success";
-  } else {
-    $response = "Invalid username or password";
+    $row = $result->fetch_assoc();
+    $response = $row['messages'];
+  } 
+  else 
+  {
+    $response = "empty";
   }
 
   // Send a response back to RabbitMQ 
   $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'com_response', true);
+  
+  if ($post !== null)
+  {
+    $sql2 = "Insert INTO Messages (username, timestamp, messages) Values ('$username', '$time', '$post')";
+    $check = $mysqli->query($sql2);
+  }
 };
 
 // Consume the message so it doesn're read it
 $channel->basic_consume('com_requests', '', false, true, false, false, $callback);
 
 // Wait for messages
-while(true) {
+while(true) 
+{
 	$channel->wait();
 }
 
