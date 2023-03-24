@@ -1,5 +1,3 @@
-#!/usr/bin/php
-
 <?php
 
 require_once __DIR__ . '/vendor/autoload.php';
@@ -59,10 +57,10 @@ $connection = new AMQPStreamConnection('172.28.118.6', 5672, 'test', 'test', 'te
 $channel = $connection->channel();
 
 $channel->exchange_declare('testExchange', 'topic', false, true, false);
-$channel->queue_declare('meal_requests', false, true, false, false);
+$channel->queue_declare('search', false, true, false, false);
 $channel2 = $connection->channel();
 $channel2->exchange_declare('testExchange', 'topic', false, true, false);
-$channel2->queue_declare('meal_response', false, true, false, false);
+$channel2->queue_declare('search', false, true, false, false);
 
 // Callback function waits for a message from RabbitMQ and then decodes the message, checks mysql, and sends a message back
 $callback = function($msg) use ($mysqli, $channel2) {
@@ -77,7 +75,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 };
 
 // Consume the message so it doesn're read it
-$channel->basic_consume('meal_requests', '', false, true, false, false, $callback);
+$channel->basic_consume('search', '', false, true, false, false, $callback);
 
 // Wait for messages
 while(true) {
