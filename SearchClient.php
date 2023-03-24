@@ -5,26 +5,22 @@
     </head>
     <body>
      
-<?php
-        
-if(isset($_GET['search'])){
-    $query = $_GET['search'];
-    
-    $response = search($query);
-    echo $response;
-} else{
-    echo '<form method= "GET">';
-    echo '<label for="search"> Search Here:</label>';
-    echo '<input type="text" name="search" id="search">';
-    echo '<input type ="submit" value="Search">';
-    echo '</form>';
-}
-?>
+<form method="GET" action= "search">
+    <label for="search">search:</label>
+    <input type="text" id="search" name="qury">
+    <input type="submit" value="submit">
+        </form>
     </body>
 </html>
         
 <?php
 
+if ($_SERVER['REQUEST METHOD']==='POST'){
+}
+else {
+
+}
+    
 require_once __DIR__ . '/vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -39,6 +35,7 @@ use PhpAmqpLib\Message\AMQPMessage;
 $connection = new AMQPStreamConnection('172.28.118.6', 5672, 'test', 'test', 'testHost');
 $channel = $connection->channel();
 
+        //if server request method }before closing the channels
 $channel->exchange_declare('testExchange', 'topic', false, true, false);
 $channel->queue_declare('search', false, true, false, false);
 $channel2 = $connection->channel();
@@ -69,6 +66,8 @@ while(true) {
 $channel->close();
 $channel2->close();
 $connection->close();
+
+
 $mysqli->close();
 
 ?>
