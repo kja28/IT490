@@ -7,3 +7,5 @@ registrationPage.html, regserver.php, profile.php are used to get the Registrati
 SearchClient.php, mysqlcode.php, searchserver.php are used to search and view recipes
 
 Meal_Day.php, Meal_day.sql, mealclient.php, meals_tabel_update.sql, mealserver.php are used to present the user with the meal of the day.
+
+profilePageClient.php, profilePageServer.php
