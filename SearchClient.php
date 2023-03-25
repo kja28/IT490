@@ -37,36 +37,24 @@ $channel2->exchange_declare('testExchange', 'topic', false, true, false);
 $channel2->queue_declare('search_response', false, true, false, false);
 if ($_SERVER['REQUEST_METHOD']==='POST'){
     
+$search = $_POST['search'];
+$search_request = array(
+    'search' => $search,
+  );
+    $response = null;
+  $msg = new AMQPMessage(json_encode($search_request));
+
+  $channel2->basic_publish($msg, 'testExchange', 'search_requests', true);
 
 // Callback function waits for a message from RabbitMQ and then decodes the message, checks mysql, and sends a message back
-$callback = function($msg) use ($mysqli, $channel2) {
-
+$callback = function($msg) use ($channel2, &$response) {
     $data = json_decode($msg->body, true);
-    $data = json_decode($msg->body, true);
-    $id = $data[0]['id'];
-    $title = $data[0]['title'];
-    $ing = $data[0]['ingredients'];
-    $ins = $data[0]['instructions'];
-    $time = $data[0]['times'];
-    $image = $data[0]['image'];
-
-    // Display the message on the webpage
-    echo "<h1>$title</h1>";
-    echo "<h2>Ingredients:</h2>";
-    echo "<ul>";
-    foreach ($ing as $x) {
-
-        echo "<li> $x </li>";
-
+    foreach ($data['hits'] as $hit) {
+        $recipe = $hit['recipe'];
+        $recipe_url = $recipe['url'];
+        echo $recipe_url . "<br>";
     }
-
-    echo "</ul>";
-    echo "<h2>Instructions:</h2>";
-    echo "<ol>";
-    foreach ($ins as $y) {
-        echo "<li> $y[text] </li>";
-    }
-    echo "</ol>";
+    $response = "hi";
 };
 
 // Consume the message so it doesn're read it
