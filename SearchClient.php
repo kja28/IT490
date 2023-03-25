@@ -7,7 +7,7 @@
      
 <form method="POST">
     <label for="search">search:</label>
-    <input type="text" id="search" name="qury">
+    <input type="text" id="search" name="search">
     <input type="submit" value="submit">
         </form>
     </body>
