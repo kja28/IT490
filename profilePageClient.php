@@ -1,3 +1,7 @@
+<?php
+session_start();
+$username = $_SESSION['username'];
+?>
 <!DOCTYPE html>
 <html>
 <head>
@@ -189,7 +193,7 @@ $channel2->queue_declare('page_response', false, true, false, false);
 
 
   $profile_request = array(
-    'request' => "hi",
+    'username' => $username,
   );
 
   $msg = new AMQPMessage(json_encode($profile_request));
