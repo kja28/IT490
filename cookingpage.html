@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Cooking Page</title>
+  <link rel="stylesheet" type="text/css" href="style.css">
+</head>
+
+<body>
+
+  <!-- Login Modal -->
+  <div id="loginModal" class="modal">
+    <div class="modal-content">
+      <span class="close" onclick="closeModal()">&times;</span>
+      <form>
+        <h2>Login</h2>
+        <form action="add_post.php" method="POST">
+        <label for="username">Username:</label>
+        <input type="text" id="username" name="username">
+        <br>
+        <label for="password">Password:</label>
+        <input type="password" id="password" name="password">
+        <br>
+        <button type="button" onclick="login()">Login</button>
+      </form>
+    </div>
+  </div>
+
+ 
+  <header>
+    <h1>Cooking Page</h1>
+    <nav>
+      <ul>
+        <li><a href="#">Home</a></li>
+        <li><a href="#">Recipes</a></li>
+        <li><a href="mealoftheday.html">Meal of the Day</a></li> 
+        <li><a href="searchmeal.html">Search Meal</a></li> 
+        <li><a href="5star.html">Rate Meal</a></li> 
+        <li><a href="registrationPage.html">Registration</a></li> <!-- Link to registration page -->
+        <li><a href="discussion.html">Community Discussion</a></li> <!-- Link to discussion page -->
+        <li><a href="profilePage.html">Profile Page</a></li>
+        <li><a href="loginpage.html">Login</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main>
+    <h2>Meal of the day</h2>
+    <div id="meal-of-the-week">
+        <?php include 'meal_of_the_day.php'; ?>
+      </div>
+
+    <div class="meal-of-the-week">
+      <img src="https://nourisheveryday.com/wp-content/uploads/wordpress-popular-posts/8369-featured-300x250.jpg" alt="Meal of the Week">
+      <h3>Spaghetti Bolognese</h3>
+      <p> Spaghetti bolognese consists of spaghetti with an Italian meat sauce made with minced beef, bacon and tomatoes, served with Parmesan cheese</p>
+    </div>
+  </main>
+
+  <footer>
+    <p>&copy; IT-490 Cooking Page</p>
+  </footer>
+
+  <script src="script.js"></script>
+
+</body>
+</html>
