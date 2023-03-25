@@ -1,6 +1,8 @@
 
 
 <?php
+// start the session
+session_start();
 
 //want to later put the CSS code and PHP code into seperate files, to make everything neater
 
