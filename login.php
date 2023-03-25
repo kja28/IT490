@@ -1,5 +1,4 @@
 <?php
-//want to later put the CSS code and PHP code into seperate files, to make everything neater
 require_once __DIR__ . '/vendor/autoload.php';
 
 use PhpAmqpLib\Connection\AMQPStreamConnection;
@@ -65,6 +64,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 $channel->close();
 $channel2->close();
 $connection->close();
+
+// start the session
+session_start();
 
 // display login form
 ?>
