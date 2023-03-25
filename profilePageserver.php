@@ -31,9 +31,10 @@ $callback = function($msg) use ($mysqli, $channel2)
 {
   // Extract the username and password from the message
   $data = json_decode($msg->body, true);
+  $username = $data['username'];
 
   // Search for the user in the MySQL database
-  $sql = "SELECT * FROM Users WHERE username = 'first'";
+  $sql = "SELECT * FROM Users WHERE username = '$username'";
   $result = $mysqli->query($sql);
   $info = array();
   // Check if the user exists
