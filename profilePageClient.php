@@ -233,6 +233,5 @@ $channel2->close();
 $connection->close();
 ?>
     <button onclick="location.href='cookingpage.html'">Go back to cooking page</button>
-
 </body>
 </html>
