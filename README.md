@@ -9,3 +9,7 @@ SearchClient.php, mysqlcode.php, searchserver.php are used to search and view re
 Meal_Day.php, Meal_day.sql, mealclient.php, meals_tabel_update.sql, mealserver.php are used to present the user with the meal of the day.
 
 profilePageClient.php, profilePageServer.php are used to get the profile page working
+
+cookingPage.html, script.js, style.css is the stuff for the main page
+
+loginpage.html, login.php, mysqlcode.php for the login page
