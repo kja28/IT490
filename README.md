@@ -8,4 +8,4 @@ SearchClient.php, mysqlcode.php, searchserver.php are used to search and view re
 
 Meal_Day.php, Meal_day.sql, mealclient.php, meals_tabel_update.sql, mealserver.php are used to present the user with the meal of the day.
 
-profilePageClient.php, profilePageServer.php
+profilePageClient.php, profilePageServer.php are used to get the profile page working
