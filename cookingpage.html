@@ -3,6 +3,8 @@
 <head>
   <title>Cooking Page</title>
   <link rel="stylesheet" type="text/css" href="style.css">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
 </head>
 
 <body>
@@ -29,6 +31,7 @@
   <header>
     <h1>Cooking Page</h1>
     <nav>
+      <div class="nav-container">
       <ul>
         <li><a href="#">Home</a></li>
         <li><a href="#">Recipes</a></li>
@@ -40,19 +43,21 @@
         <li><a href="profilePage.html">Profile Page</a></li>
         <li><a href="loginpage.html">Login</a></li>
       </ul>
+    </div>
     </nav>
+ 
   </header>
 
   <main>
-    <h2>Meal of the day</h2>
-    <div id="meal-of-the-week">
-        <?php include 'meal_of_the_day.php'; ?>
+    <h2>Meal of the Week</h2>
+    <div class="meal-of-the-week-container">
+      <div class="meal-of-the-week">
+        <img src="https://nourisheveryday.com/wp-content/uploads/wordpress-popular-posts/8369-featured-300x250.jpg" alt="Meal of the Week">
+        <div class="meal-of-the-week-text">
+          <h3>Spaghetti Bolognese</h3>
+          <p> Spaghetti bolognese consists of spaghetti with an Italian meat sauce made with minced beef, bacon and tomatoes, served with Parmesan cheese</p>
+        </div>
       </div>
-
-    <div class="meal-of-the-week">
-      <img src="https://nourisheveryday.com/wp-content/uploads/wordpress-popular-posts/8369-featured-300x250.jpg" alt="Meal of the Week">
-      <h3>Spaghetti Bolognese</h3>
-      <p> Spaghetti bolognese consists of spaghetti with an Italian meat sauce made with minced beef, bacon and tomatoes, served with Parmesan cheese</p>
     </div>
   </main>
 
@@ -64,3 +69,4 @@
 
 </body>
 </html>
+<!--<form method="post" action="register.php"></form>-->>
