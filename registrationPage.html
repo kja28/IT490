@@ -81,6 +81,10 @@ button:hover {
   color: #000;
 }
 
+input[type="email"] {
+  width: 100%;
+}
+
 form {
   margin-top: 40px;
   display: flex;
@@ -178,6 +182,10 @@ input[type="submit"]:hover {
 <body>
 	
 	<form action="register.php" method="post">
+
+    <label for="email">Email</label>
+    <input type="email" id="email" name="email" required>
+
 			<label for="username">Username</label>
 			<input type="text" id="username" name="username" required>
 
