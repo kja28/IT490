@@ -52,6 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // user is valid, start a session and redirect to home page
     session_start();
     $_SESSION['username'] = $username;
+    $_SESSION['code'] = $code;
     header("Location: verify.php");
     exit();
   } 
