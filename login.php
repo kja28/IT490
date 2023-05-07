@@ -21,10 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // For security purposes the password should be hashed first and store only hashed passwords in mysql	
   $username = $_POST["username"];
   $password = $_POST["password"];
+  $email = $_POST["email"];
 
   $login_request = array(
     'username' => $username,
-    'password' => $password
+    'password' => $password,
+    'email' => $email
   );
   $msg = new AMQPMessage(json_encode($login_request));
 
@@ -50,7 +52,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     // user is valid, start a session and redirect to home page
     session_start();
     $_SESSION['username'] = $username;
-    header("Location: cookingpage.html");
+    header("Location: verify.php");
     exit();
   } 
   else 
