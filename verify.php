@@ -3,8 +3,8 @@ session_start();
 $code = $_SESSION['code'];
 		 
 // Redirect user to login page if email session variable is not set
-if(!isset($_SESSION['email'])){
-    header("Location: cooklogin.php");
+if(!isset($code){
+    header("Location: loginpage.html");
     exit();
 }
 
@@ -25,6 +25,7 @@ if(isset($_POST['code'])){
     }
 }
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -198,7 +199,6 @@ input[type="submit"]:hover {
     <form method="post" action="">
         <label>Verification Code:</label>
         <input type="text" name="code" required>
-        <input type="hidden" name="email" value="<?php echo $_SESSION['email']; ?>">
         <button type="submit">Verify</button>
     </form>
 </body>
