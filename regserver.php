@@ -63,6 +63,8 @@ $callback = function($msg) use ($mysqli, $channel2) {
   $lastname = $mysqli->real_escape_string($data['lastname']);
 
   $diet = $mysqli->real_escape_string($data['diet']);
+	
+  $email = $mysqli->real_escape_string($data['email']);
 
  
 
@@ -88,7 +90,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   {
 
-   $sqlinsert = "INSERT INTO Users (username, password, firstname, lastname, diet) VALUES ('$username', '$password', '$firstname', '$lastname', '$diet')";
+   $sqlinsert = "INSERT INTO Users (username, password, firstname, lastname, diet, email) VALUES ('$username', '$password', '$firstname', '$lastname', '$diet', '$email')";
 
    $result = $mysqli->query($sqlinsert);
 
