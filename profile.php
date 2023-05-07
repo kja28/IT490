@@ -19,6 +19,7 @@ $channel2->queue_declare('profile_response', false, true, false, false);
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // gets the username and password from what the user types in and encodes it as a json
   // For security purposes the password should be hashed first and store only hashed passwords in mysql	
+  $email = $_POST["email"];
   $username = $_POST["username"];
   $firstname = $_POST["firstname"];
   $lastname = $_POST["lastname"];
@@ -26,6 +27,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $diet = $_POST["dietary"];
 
   $profile_request = array(
+    'email' => $email, 
     'username' => $username,
     'firstname' => $firstname,
     'lastname' => $lastname,
