@@ -1,6 +1,7 @@
 <?php
 session_start();
-
+$code = $_SESSION['code'];
+		 
 // Redirect user to login page if email session variable is not set
 if(!isset($_SESSION['email'])){
     header("Location: cooklogin.php");
