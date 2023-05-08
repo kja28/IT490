@@ -76,7 +76,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
       $response = "success";
     
-      $find = "SELECT email FROM Users WHERE username = '$username'"	
+      $find = "SELECT email FROM Users WHERE username = '$username'";	
 	    
       $result2 = $mysqli->query($find);	
 	  
