@@ -55,7 +55,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   // Search for the user in the MySQL database
 
-  $sql = "SELECT * FROM Users WHERE username = '$username' AND password = '$password'";
+  $sql = "SELECT password FROM Users WHERE username = '$username'";
 
   $result = $mysqli->query($sql);
 
@@ -65,27 +65,49 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   if ($result->num_rows == 1) 
   {
-	  
-     $code = rand(100000, 999999);
+	
+    $save = $result->fetch_assoc();
 
-    $response = "success";
+    $check = $save["password"];
     
-    $find = "SELECT email FROM Users WHERE username = '$username' AND password = '$password'"	
+    if (password_verify($password, $check))
+    {
+      $code = rand(100000, 999999);
+
+      $response = "success";
+    
+      $find = "SELECT email FROM Users WHERE username = '$username'"	
 	    
-    $result2 = $mysqli->query($find);	
+      $result2 = $mysqli->query($find);	
 	  
-    $found = $result->fetch_assoc();
+      $found = $result->fetch_assoc();
   
-    $email = $found["email"];
+      $email = $found["email"];
 	  
-    $info = array( 'response' => $response,
+      $info = array( 'response' => $response,
 
-                   'code' => $code,
+                     'code' => $code,
 
-                   'email' => $email
-                  );
+                     'email' => $email
+                   );
 	  
-    $send = new AMQPMessage(json_encode($info));
+      $send = new AMQPMessage(json_encode($info));
+    }
+    
+    else
+	    
+    {
+      $response = "Invalid username or password";
+	  
+      $info = array( 'response' => $response,
+
+                     'code' => 0,
+
+                     'email' => 0
+                    );
+	  
+      $send = new AMQPMessage(json_encode($info));
+    }
 	  
     
 
