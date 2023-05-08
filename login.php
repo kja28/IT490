@@ -86,8 +86,5 @@ $channel->close();
 $channel2->close();
 $connection->close();
 
-// start the session
-session_start();
-
 // display login form
 ?>
