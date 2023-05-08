@@ -68,6 +68,12 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   if ($result->num_rows == 1) 
   {
+	  
+	  
+     $code = rand(100000, 999999);
+        $_SESSION['verification_code'] = $code;
+        $_SESSION['email'] = $email;
+
 
     $response = "success";
 
