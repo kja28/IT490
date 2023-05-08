@@ -33,15 +33,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // sends the message out to rabbitmq from channel and waits for a response on channel2
   $channel->basic_publish($msg, 'testExchange', 'login_requests', true);
 
+  $response = null;
   $code = null;
   $email = null;
   $callback = function ($msg) use (&$response, &$code, &$email) {
     $data = json_decode($msg->body, true);
-
     $response = $data['response'];
-
     $code = $data['code'];
-
     $email = $data['email'];
 
   };
