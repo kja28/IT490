@@ -1,6 +1,6 @@
 <?php
 session_start();
-$cerification_code = $_SESSION['code'];
+$verification_code = $_SESSION['code'];
 		 
 // Redirect user to login page if email session variable is not set
 if(!isset($code){
