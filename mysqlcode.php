@@ -52,9 +52,6 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   $password = $mysqli->real_escape_string($data['password']);
 	
-  $email = $mysqli->real_escape_string($data['email']);
-
-
 
   // Search for the user in the MySQL database
 
@@ -113,7 +110,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   // Send a response back to RabbitMQ 
 
-  $channel2->basic_publish(new AMQPMessage($send), 'testExchange', 'login_response', true);
+  $channel2->basic_publish($send), 'testExchange', 'login_response', true);
 
 };
 
