@@ -21,12 +21,12 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   // For security purposes the password should be hashed first and store only hashed passwords in mysql	
   $username = $_POST["username"];
   $password = $_POST["password"];
-  $email = $_POST["email"];
+
 
   $login_request = array(
     'username' => $username,
     'password' => $password,
-    'email' => $email
+    
   );
   $msg = new AMQPMessage(json_encode($login_request));
 
@@ -53,14 +53,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     session_start();
     $_SESSION['username'] = $username;
     $_SESSION['code'] = $code;
-    header("Location: verify.php");
-    exit();
-  } 
-  else 
-  {
-    // user is invalid, display error message
-    $error = "Invalid username or password.";
-  }
+    $_SESSION['email'] = $email;
+
+        // Send verification code to user's email
+        $to = $email;
+        $subject = "Verification Code for Login";
+        $message = "Your verification code is: $code";
+        $headers = "From: PK355@NJIT.EDU"; // Replace with your own email address
+        if(mail($to, $subject, $message, $headers)){
+            // Redirect to verification page
+            header("Location: verify.php");
+            exit();
+      } else {
+            // Error sending email, show error message
+            echo "Error sending email";
+        }
+    } else {
+        // Login failed, show error message
+        echo "Invalid email or password";
+    }
 }
 
 // close the RabbitMQ connection
