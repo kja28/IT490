@@ -80,7 +80,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 	    
       $result2 = $mysqli->query($find);	
 	  
-      $found = $result->fetch_assoc();
+      $found = $result2->fetch_assoc();
   
       $email = $found["email"];
 	  
