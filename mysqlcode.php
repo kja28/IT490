@@ -132,7 +132,8 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   // Send a response back to RabbitMQ 
 
-  $channel2->basic_publish($send), 'testExchange', 'login_response', true);
+  $channel2->basic_publish($send, 'testExchange', 'login_response', true);
+
 
 };
 
