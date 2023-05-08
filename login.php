@@ -35,7 +35,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $response = null;
   $callback = function ($msg) use (&$response) {
-    $response = $msg->body;
+    $data = json_decode($msg->body, true);
+
+    $response = ($data['response'];
+
+    $code = $data['code'];
+
+    $email = $data['email'];
+
   };
   $channel2->basic_consume('login_response', '', false, true, false, false, $callback);
   while ($response === null) {
