@@ -12,7 +12,7 @@ if(!isset($code){
 if(isset($_POST['code'])){
     // Check if verification code matches
     $code = $_POST['code'];
-    if ($code == $_SESSION['verification_code']) {
+    if ($code == $_SESSION['code']) {
         // Verification successful, set email session variable
         $_SESSION['authenticated'] = true;
 
