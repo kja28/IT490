@@ -1,6 +1,6 @@
 <?php
 session_start();
-$code = $_SESSION['code'];
+$cerification_code = $_SESSION['code'];
 		 
 // Redirect user to login page if email session variable is not set
 if(!isset($code){
@@ -12,7 +12,7 @@ if(!isset($code){
 if(isset($_POST['code'])){
     // Check if verification code matches
     $code = $_POST['code'];
-    if ($code == $_SESSION['verification_code']) {
+    if ($code == $verification_code) {
         // Verification successful, set email session variable
         $_SESSION['authenticated'] = true;
 
