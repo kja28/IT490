@@ -25,7 +25,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
   $login_request = array(
     'username' => $username,
-    'password' => $password,
+    'password' => $password
     
   );
   $msg = new AMQPMessage(json_encode($login_request));
@@ -37,7 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $callback = function ($msg) use (&$response) {
     $data = json_decode($msg->body, true);
 
-    $response = ($data['response'];
+    $response = $data['response'];
 
     $code = $data['code'];
 
