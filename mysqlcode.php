@@ -69,19 +69,43 @@ $callback = function($msg) use ($mysqli, $channel2) {
   if ($result->num_rows == 1) 
   {
 	  
-	  
      $code = rand(100000, 999999);
-        $_SESSION['verification_code'] = $code;
-        $_SESSION['email'] = $email;
-
 
     $response = "success";
+    
+    $find = "SELECT email FROM Users WHERE username = '$username' AND password = '$password'"	
+	    
+    $result2 = $mysqli->query($find);	
+	  
+    $found = $result->fetch_assoc();
+  
+    $email = $found["email"];
+	  
+    $info = array( 'response' => $response,
+
+                   'code' => $code,
+
+                   'email' => $email
+                  );
+	  
+    $send = new AMQPMessage(json_encode($info));
+	  
+    
 
   } 
   else 
   {
 
     $response = "Invalid username or password";
+	  
+    $info = array( 'response' => $response,
+
+                   'code' => 0,
+
+                   'email' => 0
+                  );
+	  
+    $send = new AMQPMessage(json_encode($info));
 
   }
 
@@ -89,7 +113,7 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   // Send a response back to RabbitMQ 
 
-  $channel2->basic_publish(new AMQPMessage($response), 'testExchange', 'login_response', true);
+  $channel2->basic_publish(new AMQPMessage($send), 'testExchange', 'login_response', true);
 
 };
 
