@@ -25,13 +25,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
   $lastname = $_POST["lastname"];
   $password = $_POST["password"];
   $diet = $_POST["dietary"];
+  
+   $save = password_hash($password, PASSWORD_BCRYPT);
 
   $profile_request = array(
     'email' => $email, 
     'username' => $username,
     'firstname' => $firstname,
     'lastname' => $lastname,
-    'password' => $password,
+    'password' => $save,
     'diet' => $diet 
   );
   $msg = new AMQPMessage(json_encode($profile_request));
