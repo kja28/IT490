@@ -51,6 +51,8 @@ $callback = function($msg) use ($mysqli, $channel2) {
   $username = $mysqli->real_escape_string($data['username']);
 
   $password = $mysqli->real_escape_string($data['password']);
+	
+  $email = $mysqli->real_escape_string($data['email']);
 
 
 
@@ -64,11 +66,14 @@ $callback = function($msg) use ($mysqli, $channel2) {
 
   // Check if the user exists
 
-  if ($result->num_rows == 1) {
+  if ($result->num_rows == 1) 
+  {
 
     $response = "success";
 
-  } else {
+  } 
+  else 
+  {
 
     $response = "Invalid username or password";
 
